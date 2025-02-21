@@ -2,7 +2,7 @@
 	"name": "Trigger_r34",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -17,7 +17,7 @@
 				"frequency": "Minute",
 				"interval": 1,
 				"startTime": "2025-02-21T13:32:00Z",
-				"endTime": "2025-02-22T14:10:00Z",
+				"endTime": "2025-02-21T14:00:00Z",
 				"timeZone": "UTC"
 			}
 		}
