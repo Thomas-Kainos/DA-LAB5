@@ -64,15 +64,17 @@
 								"requestMethod": "GET"
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "JsonSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings",
 									"copyBehavior": "FlattenHierarchy"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "JsonWriteSettings",
+									"filePattern": {
+										"value": "weather@{formatDateTime(utcnow(), 'yyyyMMddHHmmss')}.json",
+										"type": "Expression"
+									}
 								}
 							},
 							"enableStaging": false,
@@ -331,7 +333,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_hfk",
+								"referenceName": "Json3",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -345,7 +347,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/datasets/SourceDataset_hfk')]",
-				"[concat(variables('workspaceId'), '/datasets/DestinationDataset_hfk')]"
+				"[concat(variables('workspaceId'), '/datasets/Json3')]"
 			]
 		},
 		{
@@ -731,6 +733,30 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Json3')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "thomashuntsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "weather",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultStorage')]"
+			]
 		}
 	]
 }
