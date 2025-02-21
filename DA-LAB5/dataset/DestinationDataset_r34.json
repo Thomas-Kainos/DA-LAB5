@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_r34",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "thomashuntsynapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "weather",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {}
+	}
+}
