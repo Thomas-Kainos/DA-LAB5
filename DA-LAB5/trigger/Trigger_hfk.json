@@ -1,0 +1,25 @@
+{
+	"name": "Trigger_hfk",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_hfk",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2025-02-21T13:05:00Z",
+				"endTime": "2025-02-21T16:05:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
