@@ -742,7 +742,7 @@
 				"schema": {
 					"type": "object",
 					"properties": {
-						"@context": {
+						"@@context": {
 							"type": "array",
 							"items": {
 								"type": "string"
