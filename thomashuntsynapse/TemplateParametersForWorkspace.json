@@ -8,6 +8,9 @@
 		"thomashuntsynapse-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:thomashuntsynapse.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"SourceNewLab5_properties_typeProperties_url": {
+			"value": "https://api.weather.gov/"
+		},
 		"WeatherAPI_properties_typeProperties_url": {
 			"value": "https://api.weather.gov"
 		},

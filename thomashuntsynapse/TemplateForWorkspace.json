@@ -12,6 +12,10 @@
 			"metadata": "Secure string for 'connectionString' of 'thomashuntsynapse-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:thomashuntsynapse.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"SourceNewLab5_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.weather.gov/"
+		},
 		"WeatherAPI_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.weather.gov"
@@ -30,13 +34,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/CopyPipeline_hfk')]",
+			"name": "[concat(parameters('workspaceName'), '/CopyPipeline_new')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_hfk",
+						"name": "Copy_r34",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -49,7 +53,7 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "https://api.weather.gov/gridpoints/OKX/36,36/forecast/hourly"
+								"value": "gridpoints/OKX/36,36/forecast/hourly"
 							},
 							{
 								"name": "Destination",
@@ -66,274 +70,25 @@
 							"sink": {
 								"type": "JsonSink",
 								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
+									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
 									"type": "JsonWriteSettings",
-									"filePattern": {
-										"value": "weather@{formatDateTime(utcnow(), 'yyyyMMddHHmmss')}.json",
-										"type": "Expression"
-									}
+									"filePattern": "setOfObjects"
 								}
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "$['@context'][0]"
-										},
-										"sink": {
-											"name": "@@context']["
-										}
-									},
-									{
-										"source": {
-											"path": "$['type']"
-										},
-										"sink": {
-											"name": "type"
-										}
-									},
-									{
-										"source": {
-											"path": "$['geometry']['type']"
-										},
-										"sink": {
-											"name": "geometry_type"
-										}
-									},
-									{
-										"source": {
-											"path": "$['geometry']['coordinates'][0][0][0]"
-										},
-										"sink": {
-											"name": "geometry_coordinates'][0][0]["
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['units']"
-										},
-										"sink": {
-											"name": "units"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['forecastGenerator']"
-										},
-										"sink": {
-											"name": "forecastGenerator"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['generatedAt']"
-										},
-										"sink": {
-											"name": "generatedAt"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['updateTime']"
-										},
-										"sink": {
-											"name": "updateTime"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['validTimes']"
-										},
-										"sink": {
-											"name": "validTimes"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['elevation']['unitCode']"
-										},
-										"sink": {
-											"name": "properties_elevation_unitCode"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['elevation']['value']"
-										},
-										"sink": {
-											"name": "properties_elevation_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['number']"
-										},
-										"sink": {
-											"name": "number"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['name']"
-										},
-										"sink": {
-											"name": "name"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['startTime']"
-										},
-										"sink": {
-											"name": "startTime"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['endTime']"
-										},
-										"sink": {
-											"name": "endTime"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['isDaytime']"
-										},
-										"sink": {
-											"name": "isDaytime"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['temperature']"
-										},
-										"sink": {
-											"name": "temperature"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['temperatureUnit']"
-										},
-										"sink": {
-											"name": "temperatureUnit"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['temperatureTrend']"
-										},
-										"sink": {
-											"name": "temperatureTrend"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['probabilityOfPrecipitation']['unitCode']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['probabilityOfPrecipitation_unitCode"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['probabilityOfPrecipitation']['value']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['probabilityOfPrecipitation_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['dewpoint']['unitCode']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['dewpoint_unitCode"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['dewpoint']['value']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['dewpoint_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['relativeHumidity']['unitCode']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['relativeHumidity_unitCode"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['relativeHumidity']['value']"
-										},
-										"sink": {
-											"name": "properties_periods'][0]['relativeHumidity_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['windSpeed']"
-										},
-										"sink": {
-											"name": "windSpeed"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['windDirection']"
-										},
-										"sink": {
-											"name": "windDirection"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['icon']"
-										},
-										"sink": {
-											"name": "icon"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['shortForecast']"
-										},
-										"sink": {
-											"name": "shortForecast"
-										}
-									},
-									{
-										"source": {
-											"path": "$['properties']['periods'][0]['detailedForecast']"
-										},
-										"sink": {
-											"name": "detailedForecast"
-										}
-									}
-								]
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_hfk",
+								"referenceName": "SourceDataset_r34",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "Json3",
+								"referenceName": "DestinationDataset_r34",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -346,8 +101,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/SourceDataset_hfk')]",
-				"[concat(variables('workspaceId'), '/datasets/Json3')]"
+				"[concat(variables('workspaceId'), '/datasets/SourceDataset_r34')]",
+				"[concat(variables('workspaceId'), '/datasets/DestinationDataset_r34')]"
 			]
 		},
 		{
@@ -373,6 +128,30 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_r34')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "thomashuntsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "weather",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {}
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultStorage')]"
@@ -570,6 +349,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/Json3')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "thomashuntsynapse-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "weather",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/SourceDataset_hfk')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
@@ -587,6 +390,47 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/WeatherService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SourceDataset_r34')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SourceNewLab5",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "gridpoints/OKX/36,36/forecast/hourly",
+					"requestMethod": "GET"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/SourceNewLab5')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SourceNewLab5')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('SourceNewLab5_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
@@ -681,15 +525,7 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "CopyPipeline_hfk",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -701,8 +537,37 @@
 					}
 				}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Trigger_r34')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "CopyPipeline_new",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 1,
+						"startTime": "2025-02-21T13:32:00Z",
+						"endTime": "2025-02-22T14:00:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/pipelines/CopyPipeline_hfk')]"
+				"[concat(variables('workspaceId'), '/pipelines/CopyPipeline_new')]"
 			]
 		},
 		{
@@ -733,30 +598,6 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Json3')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "thomashuntsynapse-WorkspaceDefaultStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "weather",
-						"fileSystem": "bronze"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultStorage')]"
-			]
 		}
 	]
 }
