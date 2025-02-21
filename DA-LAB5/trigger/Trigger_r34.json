@@ -1,0 +1,25 @@
+{
+	"name": "Trigger_r34",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_new",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2025-02-21T13:32:00Z",
+				"endTime": "2025-02-22T14:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
