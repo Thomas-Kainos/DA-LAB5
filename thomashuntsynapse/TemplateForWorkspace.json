@@ -241,7 +241,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['number']"
+											"path": "['number']"
 										},
 										"sink": {
 											"name": "number"
@@ -249,7 +249,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['name']"
+											"path": "['name']"
 										},
 										"sink": {
 											"name": "name"
@@ -257,7 +257,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['startTime']"
+											"path": "['startTime']"
 										},
 										"sink": {
 											"name": "startTime"
@@ -265,7 +265,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['endTime']"
+											"path": "['endTime']"
 										},
 										"sink": {
 											"name": "endTime"
@@ -273,7 +273,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['isDaytime']"
+											"path": "['isDaytime']"
 										},
 										"sink": {
 											"name": "isDaytime"
@@ -281,7 +281,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['temperature']"
+											"path": "['temperature']"
 										},
 										"sink": {
 											"name": "temperature"
@@ -289,7 +289,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['temperatureUnit']"
+											"path": "['temperatureUnit']"
 										},
 										"sink": {
 											"name": "temperatureUnit"
@@ -297,7 +297,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['temperatureTrend']"
+											"path": "['temperatureTrend']"
 										},
 										"sink": {
 											"name": "temperatureTrend"
@@ -305,7 +305,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['probabilityOfPrecipitation']['unitCode']"
+											"path": "['probabilityOfPrecipitation']['unitCode']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['probabilityOfPrecipitation_unitCode"
@@ -313,7 +313,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['probabilityOfPrecipitation']['value']"
+											"path": "['probabilityOfPrecipitation']['value']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['probabilityOfPrecipitation_value"
@@ -321,7 +321,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['dewpoint']['unitCode']"
+											"path": "['dewpoint']['unitCode']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['dewpoint_unitCode"
@@ -329,7 +329,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['dewpoint']['value']"
+											"path": "['dewpoint']['value']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['dewpoint_value"
@@ -337,7 +337,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['relativeHumidity']['unitCode']"
+											"path": "['relativeHumidity']['unitCode']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['relativeHumidity_unitCode"
@@ -345,7 +345,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['relativeHumidity']['value']"
+											"path": "['relativeHumidity']['value']"
 										},
 										"sink": {
 											"name": "properties_periods'][0]['relativeHumidity_value"
@@ -353,7 +353,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['windSpeed']"
+											"path": "['windSpeed']"
 										},
 										"sink": {
 											"name": "windSpeed"
@@ -361,7 +361,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['windDirection']"
+											"path": "['windDirection']"
 										},
 										"sink": {
 											"name": "windDirection"
@@ -369,7 +369,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['icon']"
+											"path": "['icon']"
 										},
 										"sink": {
 											"name": "icon"
@@ -377,7 +377,7 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['shortForecast']"
+											"path": "['shortForecast']"
 										},
 										"sink": {
 											"name": "shortForecast"
@@ -385,13 +385,14 @@
 									},
 									{
 										"source": {
-											"path": "$['properties']['periods'][0]['detailedForecast']"
+											"path": "['detailedForecast']"
 										},
 										"sink": {
 											"name": "detailedForecast"
 										}
 									}
-								]
+								],
+								"collectionReference": "$['properties']['periods']"
 							}
 						},
 						"inputs": [
