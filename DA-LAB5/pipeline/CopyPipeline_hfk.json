@@ -31,15 +31,17 @@
 						"requestMethod": "GET"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings",
 							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "JsonWriteSettings",
+							"filePattern": {
+								"value": "weather@{formatDateTime(utcnow(), 'yyyyMMddHHmmss')}.json",
+								"type": "Expression"
+							}
 						}
 					},
 					"enableStaging": false,
@@ -297,7 +299,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_hfk",
+						"referenceName": "Json3",
 						"type": "DatasetReference"
 					}
 				]
