@@ -53,50 +53,87 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['id']"
+									"path": "['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['person']['name']"
+									"path": "['person']['name']"
+								},
+								"sink": {
+									"name": "name",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['person']['lastname']"
+									"path": "['person']['lastname']"
+								},
+								"sink": {
+									"name": "lastname",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['person']['age']"
+									"path": "['person']['age']"
+								},
+								"sink": {
+									"name": "age",
+									"type": "Int16"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['address']['country']"
+									"path": "['address']['country']"
+								},
+								"sink": {
+									"name": "country",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['address']['city']"
+									"path": "['address']['city']"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['address']['postcode']"
+									"path": "['address']['postcode']"
+								},
+								"sink": {
+									"name": "postcode",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['address']['street']"
+									"path": "['address']['street']"
+								},
+								"sink": {
+									"name": "street",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['customers']['customer'][0]['address']['building']"
+									"path": "['address']['building']"
+								},
+								"sink": {
+									"name": "building",
+									"type": "String"
 								}
 							}
 						],
+						"collectionReference": "$['customers']['customer']",
 						"mapComplexValuesToString": false
 					}
 				},
