@@ -5,6 +5,9 @@
 		"workspaceName": {
 			"value": "thomashuntsynapse"
 		},
+		"sales_dataset_accountKey": {
+			"value": ""
+		},
 		"thomashuntsynapse-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:thomashuntsynapse.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
@@ -16,6 +19,9 @@
 		},
 		"WeatherService_properties_typeProperties_url": {
 			"value": "https://api.weather.gov/"
+		},
+		"sales_dataset_properties_typeProperties_url": {
+			"value": "https://mdsynapse4321.dfs.core.windows.net/"
 		},
 		"thomashuntsynapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://thomashuntlab5.dfs.core.windows.net"

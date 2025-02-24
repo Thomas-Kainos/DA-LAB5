@@ -7,6 +7,10 @@
 			"metadata": "Workspace name",
 			"defaultValue": "thomashuntsynapse"
 		},
+		"sales_dataset_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'sales_dataset'"
+		},
 		"thomashuntsynapse-WorkspaceDefaultSqlServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'thomashuntsynapse-WorkspaceDefaultSqlServer'",
@@ -23,6 +27,10 @@
 		"WeatherService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.weather.gov/"
+		},
+		"sales_dataset_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://mdsynapse4321.dfs.core.windows.net/"
 		},
 		"thomashuntsynapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -993,6 +1001,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/sales_dataset')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('sales_dataset_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('sales_dataset_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/thomashuntsynapse-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -1033,6 +1064,36 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Trigger 1')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "transformData",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 1,
+						"startTime": "2025-02-21T14:56:00",
+						"timeZone": "GMT Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/transformData')]"
 			]
 		},
 		{
@@ -1115,6 +1176,217 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/thomashuntsqlpool')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "uksouth"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Ingest Customers')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"writeBehavior": "Insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['person']['name']"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['person']['lastname']"
+										},
+										"sink": {
+											"name": "lastname",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['person']['age']"
+										},
+										"sink": {
+											"name": "age",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['address']['country']"
+										},
+										"sink": {
+											"name": "country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['address']['city']"
+										},
+										"sink": {
+											"name": "city",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['address']['postcode']"
+										},
+										"sink": {
+											"name": "postcode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['address']['street']"
+										},
+										"sink": {
+											"name": "street",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customers']['customer'][0]['address']['building']"
+										},
+										"sink": {
+											"name": "building",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['customers']['customer']"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Xml1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSynapseAnalyticsTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/Xml1')]",
+				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Xml1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sales_dataset",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customers.xml",
+						"folderPath": "sales",
+						"fileSystem": "bronze"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/sales_dataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "thomashuntsynapse-WorkspaceDefaultSqlServer",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "customers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/thomashuntsynapse-WorkspaceDefaultSqlServer')]"
+			]
 		}
 	]
 }
