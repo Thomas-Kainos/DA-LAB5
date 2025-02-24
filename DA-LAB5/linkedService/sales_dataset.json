@@ -2,11 +2,16 @@
 	"name": "sales_dataset",
 	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
+		"parameters": {
+			"DBName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://mdsynapse4321.dfs.core.windows.net/",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAMEUwMkZBMEUtNjU1RC00NTVCLTg3NTMtQzg5QzdGOENCN0Q4XzhmYjMzYzI2LTI2ZDAtNDhmZC04NmI2LTMwODFkYTI5MTc3YyINCn0="
+			"url": "https://mdwinter4321.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAMEUwMkZBMEUtNjU1RC00NTVCLTg3NTMtQzg5QzdGOENCN0Q4X2ZjYzIyYmE4LTJjMTMtNGNiOC04ZjNkLTI3NGYzZWE3MzBkYSINCn0="
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
