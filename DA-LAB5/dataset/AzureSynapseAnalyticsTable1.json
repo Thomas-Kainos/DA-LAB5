@@ -2,15 +2,14 @@
 	"name": "AzureSynapseAnalyticsTable1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSynapseAnalytics1",
-			"type": "LinkedServiceReference"
+			"referenceName": "thomashuntsynapse-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "dbo"
+			}
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "customers"
-		}
+		"schema": []
 	}
 }
