@@ -1,6 +1,10 @@
 {
 	"name": "Xml1",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sales_data",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "Xml",
 		"typeProperties": {
