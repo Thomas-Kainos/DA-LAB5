@@ -17,6 +17,11 @@
 				"typeProperties": {
 					"source": {
 						"type": "XmlSource",
+						"additionalColumns": [
+							{
+								"value": "$$FILEPATH"
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
