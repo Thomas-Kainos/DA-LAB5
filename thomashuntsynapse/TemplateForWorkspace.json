@@ -30,7 +30,7 @@
 		},
 		"sales_dataset_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://mdsynapse4321.dfs.core.windows.net/"
+			"defaultValue": "https://mdwinterdata.dfs.core.windows.net/"
 		},
 		"thomashuntsynapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -1196,7 +1196,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "IngestCustomersDataCopy",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1335,6 +1335,12 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"DBName": {
+						"type": "string",
+						"defaultValue": "dbo"
+					}
 				},
 				"annotations": []
 			},
