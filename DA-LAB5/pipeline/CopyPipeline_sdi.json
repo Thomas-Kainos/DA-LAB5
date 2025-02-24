@@ -1,0 +1,119 @@
+{
+	"name": "CopyPipeline_sdi",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_sdi",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "bronze/sales/customers.xml"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.customers"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "sales_data",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['person']['name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['person']['lastname']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['person']['age']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['address']['country']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['address']['city']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['address']['postcode']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['address']['street']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['customers']['customer'][0]['address']['building']"
+								}
+							}
+						],
+						"mapComplexValuesToString": false
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_sdi",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_sdi",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

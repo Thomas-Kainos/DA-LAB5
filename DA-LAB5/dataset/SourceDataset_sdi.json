@@ -1,0 +1,19 @@
+{
+	"name": "SourceDataset_sdi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sales_data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customers.xml",
+				"folderPath": "sales",
+				"fileSystem": "bronze"
+			}
+		}
+	}
+}
