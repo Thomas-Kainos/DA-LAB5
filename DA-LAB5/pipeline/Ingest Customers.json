@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "IngestCustomersDataCopy",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -138,6 +138,12 @@
 				]
 			}
 		],
+		"parameters": {
+			"DBName": {
+				"type": "string",
+				"defaultValue": "dbo"
+			}
+		},
 		"annotations": []
 	}
 }
